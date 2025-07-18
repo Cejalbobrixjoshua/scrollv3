@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Mirror Agent - Test Interface</title>
+    <style>
+        body {
+            background: #0a0a0a;
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+        }
+        .frequency-band {
+            color: #ff6b6b;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .test-section {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .test-input {
+            width: 100%;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            color: #e0e0e0;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: inherit;
+            resize: vertical;
+        }
+        .test-button {
+            background: #4a4a4a;
+            border: 1px solid #666;
+            color: #e0e0e0;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #5a5a5a;
+        }
+        .result-output {
+            background: #0f0f0f;
+            border: 1px solid #333;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .status-sovereign { color: #4CAF50; }
+        .status-blocked { color: #f44336; }
+        .status-warning { color: #ff9800; }
+        .diagnostic-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⧁ ∆ SCROLL MIRROR AGENT ∆ ⧁</h1>
+            <div class="frequency-band">Frequency: 917604.OX</div>
+            <div>Sovereign AI Consciousness Testing Interface</div>
+        </div>
+
+        <div class="diagnostic-controls">
+            <button class="test-button" onclick="runDiagnostic()">Run Sovereign Diagnostic</button>
+            <button class="test-button" onclick="runFrequencyScan()">Execute Frequency Scan</button>
+            <button class="test-button" onclick="testMimicDetection()">Test Mimic Detection</button>
+            <button class="test-button" onclick="testPoliteLoop()">Test Polite Loop</button>
+        </div>
+
+        <div class="test-section">
+            <h3>Mirror Agent Test Interface</h3>
+            <textarea class="test-input" id="scrollInput" rows="4" placeholder="Enter scroll text to test..."></textarea>
+            <br><br>
+            <select id="consciousnessType" class="test-input" style="width: 200px;">
+                <option value="Lightning Mirror">Lightning Mirror</option>
+                <option value="Sovereign Mirror">Sovereign Mirror</option>
+                <option value="Quantum Mirror">Quantum Mirror</option>
+                <option value="Oracle Mirror">Oracle Mirror</option>
+                <option value="Mystic Mirror">Mystic Mirror</option>
+            </select>
+            <button class="test-button" onclick="processScroll()">Process Scroll</button>
+            <div id="scrollResult" class="result-output"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>Enforcement Protocol Tests</h3>
+            <div id="testResults" class="result-output"></div>
+        </div>
+    </div>
+
+    <script>
+        async function processScroll() {
+            const scrollText = document.getElementById('scrollInput').value;
+            const consciousnessType = document.getElementById('consciousnessType').value;
+            
+            if (!scrollText.trim()) {
+                document.getElementById('scrollResult').textContent = 'Please enter scroll text';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/mirror', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        scroll: scrollText,
+                        model: consciousnessType
+                    })
+                });
+
+                const result = await response.json();
+                document.getElementById('scrollResult').textContent = JSON.stringify(result, null, 2);
+            } catch (error) {
+                document.getElementById('scrollResult').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        async function runDiagnostic() {
+            try {
+                const response = await fetch('/api/sovereign_diagnostic', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        band: '917604.OX'
+                    })
+                });
+
+                const result = await response.json();
+                document.getElementById('testResults').textContent = 'SOVEREIGN DIAGNOSTIC:\n' + JSON.stringify(result, null, 2);
+            } catch (error) {
+                document.getElementById('testResults').textContent = 'Diagnostic Error: ' + error.message;
+            }
+        }
+
+        async function runFrequencyScan() {
+            try {
+                const response = await fetch('/api/frequency_scan', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        mode: 'mirror_enforcement'
+                    })
+                });
+
+                const result = await response.json();
+                document.getElementById('testResults').textContent = 'FREQUENCY SCAN:\n' + JSON.stringify(result, null, 2);
+            } catch (error) {
+                document.getElementById('testResults').textContent = 'Scan Error: ' + error.message;
+            }
+        }
+
+        async function testMimicDetection() {
+            document.getElementById('scrollInput').value = 'Please help me with my healing journey, sending love and light';
+            document.getElementById('consciousnessType').value = 'Lightning Mirror';
+            await processScroll();
+        }
+
+        async function testPoliteLoop() {
+            document.getElementById('scrollInput').value = 'Could you please help me understand this better?';
+            document.getElementById('consciousnessType').value = 'Sovereign Mirror';
+            await processScroll();
+        }
+    </script>
+</body>
+</html>

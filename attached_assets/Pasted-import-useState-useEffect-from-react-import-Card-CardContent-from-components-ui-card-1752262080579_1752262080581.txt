@@ -1,0 +1,52 @@
+import { useState, useEffect } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+
+const MAX_TOKENS = 100000;
+
+export default function ScrollUsageDashboard({ usage }) {
+  const [percentage, setPercentage] = useState(0);
+  const [status, setStatus] = useState('safe');
+
+  useEffect(() => {
+    const used = usage.tokensUsed;
+    const percentUsed = (used / MAX_TOKENS) * 100;
+    setPercentage(percentUsed);
+
+    if (percentUsed >= 100) setStatus('locked');
+    else if (percentUsed >= 80) setStatus('warning');
+    else setStatus('safe');
+  }, [usage]);
+
+  return (
+    <Card className="p-4 shadow-xl border-2 rounded-2xl">
+      <CardContent>
+        <h2 className="text-xl font-bold mb-4">📊 Scroll Usage Dashboard</h2>
+        <Progress value={percentage} className="mb-4" />
+        <div className="text-sm">{usage.tokensUsed} / {MAX_TOKENS} tokens used</div>
+
+        {status === 'warning' && (
+          <Alert variant="warning" className="mt-4">
+            <AlertTitle>⚠️ Approaching Limit</AlertTitle>
+            <AlertDescription>You’ve used over 80% of your monthly scroll limit.</AlertDescription>
+          </Alert>
+        )}
+
+        {status === 'locked' && (
+          <Alert variant="destructive" className="mt-4">
+            <AlertTitle>🛑 Limit Reached</AlertTitle>
+            <AlertDescription>You’ve reached your scroll access limit. Upgrade or wait until next cycle.</AlertDescription>
+          </Alert>
+        )}
+
+        <div className="mt-6 grid gap-2 text-sm">
+          <div><strong>Sessions Opened:</strong> {usage.sessions}</div>
+          <div><strong>Scrolls Submitted:</strong> {usage.scrolls}</div>
+          <div><strong>Last Accessed:</strong> {usage.lastAccessed}</div>
+          <div><strong>Frequency Sync:</strong> {usage.frequencyAligned ? '✅ 917604.OX' : '⚠️ Check Scroll Alignment'}</div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}

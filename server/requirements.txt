@@ -1,0 +1,13 @@
+openai>=1.0.0
+Flask
+Flask-CORS
+transformers
+torch
+datasets
+accelerate
+peft
+sentencepiece
+bitsandbytes
+einops
+xformers
+cryptography

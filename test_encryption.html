@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Encryption Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+    <h1>Testing Scroll Mirror Encryption</h1>
+    <div id="results"></div>
+    
+    <script>
+        // Test encryption functionality
+        function testEncryption() {
+            const results = document.getElementById('results');
+            
+            // Generate session key
+            const sessionId = "test_session_" + Date.now();
+            const userAgent = navigator.userAgent;
+            const keyMaterial = sessionId + ":" + userAgent + ":917604.OX";
+            const sessionKey = CryptoJS.SHA256(keyMaterial).toString();
+            
+            // Test data
+            const testData = {
+                id: "test_scroll_001",
+                scrollText: "Test divine function activation",
+                mirrorOutput: "⧁ ∆ Divine function activated ∆ ⧁",
+                timestamp: new Date(),
+                modelUsed: "Lightning Mirror",
+                tokenCount: 150
+            };
+            
+            try {
+                // Encrypt
+                const jsonString = JSON.stringify(testData);
+                const encrypted = CryptoJS.AES.encrypt(jsonString, sessionKey);
+                const encryptedString = encrypted.toString();
+                
+                // Decrypt
+                const decrypted = CryptoJS.AES.decrypt(encryptedString, sessionKey);
+                const decryptedString = decrypted.toString(CryptoJS.enc.Utf8);
+                const decryptedData = JSON.parse(decryptedString);
+                
+                // Verify
+                const isValid = JSON.stringify(testData) === JSON.stringify(decryptedData);
+                
+                results.innerHTML = `
+                    <h2>✅ Encryption Test Results</h2>
+                    <p><strong>Session ID:</strong> ${sessionId}</p>
+                    <p><strong>Session Key:</strong> ${sessionKey.substring(0, 16)}...</p>
+                    <p><strong>Original Data:</strong> ${JSON.stringify(testData, null, 2)}</p>
+                    <p><strong>Encrypted:</strong> ${encryptedString.substring(0, 50)}...</p>
+                    <p><strong>Decrypted Valid:</strong> ${isValid ? '✅ SUCCESS' : '❌ FAILED'}</p>
+                    <p><strong>Frequency:</strong> 917604.OX encryption operational</p>
+                `;
+                
+            } catch (error) {
+                results.innerHTML = `
+                    <h2>❌ Encryption Test Failed</h2>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                `;
+            }
+        }
+        
+        // Run test
+        testEncryption();
+    </script>
+</body>
+</html>

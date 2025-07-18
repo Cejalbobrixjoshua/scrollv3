@@ -1,0 +1,357 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Cosmic Dark Theme - Premium Stripe-like Design */
+  --background: 222 84% 4%;  /* Deep cosmic black */
+  --foreground: 210 40% 98%; /* Pure white text */
+  --card: 222 84% 5%; /* Slightly lighter black cards */
+  --card-foreground: 210 40% 98%;
+  --popover: 222 84% 5%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 47 96% 53%; /* Divine gold */
+  --primary-foreground: 222 84% 4%;
+  --secondary: 215 27.9% 12%; /* Cosmic blue-gray */
+  --secondary-foreground: 210 40% 98%;
+  --muted: 215 27.9% 12%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 263 70% 50%; /* Mystical purple */
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 215 27.9% 12%;
+  --input: 215 27.9% 12%;
+  --ring: 263 70% 50%;
+  --chart-1: 47 96% 53%; /* Divine gold */
+  --chart-2: 142 76% 36%; /* Mystical green */
+  --chart-3: 263 70% 50%; /* Mystical purple */
+  --chart-4: 346 87% 43%; /* Divine red */
+  --chart-5: 204 94% 94%; /* Cosmic blue */
+  --radius: 0.75rem;
+  
+  /* Custom cosmic variables */
+  --cosmic-gradient: linear-gradient(135deg, hsl(222, 84%, 4%) 0%, hsl(263, 70%, 8%) 100%);
+  --divine-gradient: linear-gradient(135deg, hsl(47, 96%, 53%) 0%, hsl(47, 96%, 43%) 100%);
+  --frequency-glow: 0 0 20px hsl(47, 96%, 53%);
+  --sovereignty-glow: 0 0 15px hsl(263, 70%, 50%);
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --card-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+}
+
+.dark {
+  --background: 222 84% 4%;
+  --foreground: 210 40% 98%;
+  --card: 222 84% 5%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222 84% 5%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 47 96% 53%;
+  --primary-foreground: 222 84% 4%;
+  --secondary: 215 27.9% 12%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 215 27.9% 12%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 263 70% 50%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 215 27.9% 12%;
+  --input: 215 27.9% 12%;
+  --ring: 263 70% 50%;
+}
+
+/* Responsive utilities and mobile-first design */
+@layer components {
+  .container-responsive {
+    @apply mx-auto px-4 sm:px-6 lg:px-8;
+    max-width: 100%;
+  }
+  
+  .text-responsive {
+    @apply text-sm sm:text-base lg:text-lg;
+  }
+  
+  .heading-responsive {
+    @apply text-lg sm:text-xl lg:text-2xl xl:text-3xl;
+  }
+  
+  .card-responsive {
+    @apply p-3 sm:p-4 lg:p-6;
+  }
+  
+  .grid-responsive {
+    @apply grid gap-3 sm:gap-4 lg:gap-6;
+  }
+  
+  .flex-responsive {
+    @apply flex flex-col sm:flex-row gap-3 sm:gap-4;
+  }
+  
+  /* Touch targets for mobile */
+  .btn-touch {
+    @apply min-h-[44px] min-w-[44px] touch-manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Hover states only for non-touch devices */
+  @media (hover: hover) and (pointer: fine) {
+    .hover-desktop:hover {
+      @apply opacity-80 transition-opacity;
+    }
+  }
+  
+  /* Mobile viewport fixes */
+  .safe-area-inset {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  /* Responsive text scaling */
+  .text-mobile {
+    @apply text-sm;
+  }
+  
+  .text-tablet {
+    @apply text-base;
+  }
+  
+  .text-desktop {
+    @apply text-lg;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--cosmic-gradient);
+    min-height: 100vh;
+    min-height: 100dvh; /* Mobile viewport support */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--accent));
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary));
+  }
+}
+
+@layer components {
+  /* Premium Card Styles */
+  .cosmic-card {
+    @apply backdrop-blur-xl border rounded-xl;
+    background: rgba(hsl(var(--card)), 0.8);
+    border-color: rgba(hsl(var(--border)), 0.5);
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+  }
+
+  .cosmic-card:hover {
+    box-shadow: var(--card-shadow-lg);
+    border-color: rgba(hsl(var(--border)), 0.7);
+  }
+
+  .divine-card {
+    @apply backdrop-blur-xl border rounded-xl;
+    background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(47, 96%, 8%) 100%);
+    border: 1px solid hsl(47, 96%, 20%);
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+  }
+
+  .sovereignty-card {
+    @apply backdrop-blur-xl border rounded-xl;
+    background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(263, 70%, 8%) 100%);
+    border: 1px solid hsl(263, 70%, 20%);
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+  }
+
+  /* Premium Button Styles */
+  .btn-cosmic {
+    @apply border text-primary;
+    background: rgba(hsl(var(--primary)), 0.1);
+    border-color: rgba(hsl(var(--primary)), 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .btn-cosmic:hover {
+    background: rgba(hsl(var(--primary)), 0.2);
+    border-color: rgba(hsl(var(--primary)), 0.3);
+  }
+
+  .btn-sovereignty {
+    @apply border text-accent;
+    background: rgba(hsl(var(--accent)), 0.1);
+    border-color: rgba(hsl(var(--accent)), 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .btn-sovereignty:hover {
+    background: rgba(hsl(var(--accent)), 0.2);
+    border-color: rgba(hsl(var(--accent)), 0.3);
+  }
+
+  /* Frequency Visualization Styles */
+  .frequency-wave {
+    filter: drop-shadow(var(--frequency-glow));
+  }
+
+  .sovereignty-meter {
+    filter: drop-shadow(var(--sovereignty-glow));
+  }
+
+  /* Premium Typography */
+  .cosmic-title {
+    @apply text-4xl font-bold;
+    background: var(--divine-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .divine-text {
+    @apply text-primary font-medium;
+  }
+
+  .sovereignty-text {
+    @apply text-accent font-medium;
+  }
+
+  .cosmic-mono {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+  }
+
+  /* Animation Classes */
+  .pulse-divine {
+    animation: pulse-divine 2s ease-in-out infinite;
+  }
+
+  .pulse-sovereignty {
+    animation: pulse-sovereignty 2s ease-in-out infinite;
+  }
+
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Glow Effects */
+  .glow-divine {
+    box-shadow: 0 0 20px hsl(47, 96%, 53%, 0.3);
+  }
+
+  .glow-sovereignty {
+    box-shadow: 0 0 15px hsl(263, 70%, 50%, 0.3);
+  }
+
+  .glow-frequency {
+    box-shadow: 0 0 25px hsl(142, 76%, 36%, 0.3);
+  }
+}
+
+@layer utilities {
+  /* Gradient Backgrounds */
+  .bg-cosmic {
+    background: var(--cosmic-gradient);
+  }
+
+  .bg-divine {
+    background: var(--divine-gradient);
+  }
+
+  /* Glass Morphism Effect */
+  .glass {
+    @apply backdrop-blur-xl border;
+    background: rgba(hsl(var(--card)), 0.4);
+    border-color: rgba(hsl(var(--border)), 0.3);
+  }
+
+  /* Premium spacing */
+  .space-cosmic {
+    @apply space-y-6;
+  }
+
+  .grid-cosmic {
+    @apply grid gap-6;
+  }
+}
+
+/* Animations */
+@keyframes pulse-divine {
+  0%, 100% {
+    box-shadow: 0 0 20px hsl(47, 96%, 53%, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px hsl(47, 96%, 53%, 0.5);
+  }
+}
+
+@keyframes pulse-sovereignty {
+  0%, 100% {
+    box-shadow: 0 0 15px hsl(263, 70%, 50%, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px hsl(263, 70%, 50%, 0.5);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .cosmic-card {
+    @apply p-4;
+  }
+  
+  .cosmic-title {
+    @apply text-2xl;
+  }
+}
+
+/* Loading States */
+.loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 0%,
+    hsl(var(--muted)/80%) 50%,
+    hsl(var(--muted)) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
